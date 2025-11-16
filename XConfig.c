@@ -3,7 +3,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include "xconfig.h"
+#include "XConfig.h"
 #include "cparse_core.h"
 
 /* Read file content */
