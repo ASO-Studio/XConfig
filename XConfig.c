@@ -128,7 +128,13 @@ XC_EXPORT(char *) XConfig_Print(XConfig *xc)
 {
 	size_t size = INITIAL_BUF;
 	size_t used_size = 0;
-	char *ret_buf = malloc(size);
+	char *ret_buf = NULL;
+
+	if (!xc->config)
+		return NULL;
+
+	/* Initialize the buffer */
+	ret_buf = malloc(size);
 	memset(ret_buf, 0, size);
 
 	ConfigSection *cs = xc->config->sections;
@@ -215,6 +221,17 @@ XC_EXPORT(bool) XConfig_WriteFile(XConfig *xc, const char *file)
 XC_EXPORT(XConfig *) XConfig_Create(void)
 {
 	XConfig *s = (XConfig*)malloc(sizeof(XConfig));
+	if (!s)
+		return NULL;
+
+	s->config = (Config*)malloc(sizeof(Config));
+
+	if (!s->config)
+	{
+		free(s);
+		return NULL;
+	}
+
 	return s;
 }
 
